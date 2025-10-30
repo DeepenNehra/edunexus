@@ -1,11 +1,10 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchCourses } from '../features/courses/courseSlice'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 export default function CoursesList() {
   const dispatch = useDispatch()
-  const navigate = useNavigate()
   const { items, loading, error } = useSelector((s) => s.courses)
   const { token } = useSelector((s) => s.auth)
 

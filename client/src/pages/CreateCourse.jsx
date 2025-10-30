@@ -1,11 +1,10 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../lib/api';
 import Layout from '../components/Layout';
 
 export default function CreateCourse() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((s) => s.auth);
   const [form, setForm] = useState({ title: '', description: '' });

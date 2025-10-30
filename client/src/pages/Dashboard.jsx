@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { logout } from '../features/auth/authSlice'
 import { useNavigate } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { fetchCourses } from '../features/courses/courseSlice'
 import { fetchStatistics } from '../features/admin/adminSlice'
 
@@ -12,7 +12,7 @@ export default function Dashboard() {
   const { statistics } = useSelector((s) => s.admin)
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const [showCreateCourse, setShowCreateCourse] = useState(false)
+
 
   useEffect(() => {
     if (token && user) {
