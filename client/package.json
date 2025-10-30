@@ -9,7 +9,7 @@
     "preview": "vite preview --port 5173",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint . --fix",
-    "test": "echo 'No tests specified' && exit 0"
+    "test": "echo 'No tests specified'"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.3.0",
