@@ -62,8 +62,8 @@ After setting up your repository, verify everything is working:
 
 ```bash
 # Test cloning
-git clone https://github.com/YOUR_USERNAME/edunexus-mini-lms.git
-cd edunexus-mini-lms
+git clone https://github.com/DeepenNehra/edunexus.git
+cd edunexus
 
 # Test backend setup
 cd server
@@ -82,7 +82,7 @@ ls -la
 
 ## Final Check
 
-Visit your repository at: `https://github.com/YOUR_USERNAME/edunexus-mini-lms`
+Visit your repository at: `https://github.com/DeepenNehra/edunexus.git`
 
 - Repository looks professional ✅
 - README is comprehensive ✅

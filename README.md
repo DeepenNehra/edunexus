@@ -16,7 +16,7 @@ We welcome contributions from developers of all skill levels. Whether you're a s
 1. ⭐ Star this repository
 2. 🍴 Fork the project
 3. 📋 Check out our [Contributing Guidelines](CONTRIBUTING.md)
-4. 🔍 Browse [Issues](https://github.com/yourusername/edunexus/issues) labeled with `hacktoberfest`
+4. 🔍 Browse [Issues](https://github.com/DeepenNehra/edunexus/issues) labeled with `hacktoberfest`
 5. 💻 Make your contribution
 6. 🎯 Submit a Pull Request
 
@@ -31,6 +31,8 @@ We welcome contributions from developers of all skill levels. Whether you're a s
 ## 🌟 Live Demo
 
 🔗 **[Live Application](https://your-app-url.vercel.app)** *(Update with your deployed URL)*
+
+📂 **[GitHub Repository](https://github.com/DeepenNehra/edunexus)**
 
 ## 📋 Project Overview
 
@@ -148,7 +150,7 @@ Before you begin, ensure you have the following installed:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/edunexus.git
+   git clone https://github.com/DeepenNehra/edunexus.git
    cd edunexus
    ```
 
@@ -322,8 +324,8 @@ npm install
 #### Getting Help
 
 - 📖 Check our [Contributing Guide](CONTRIBUTING.md)
-- 🐛 [Create an issue](https://github.com/yourusername/edunexus/issues) for bugs
-- 💬 Use [GitHub Discussions](https://github.com/yourusername/edunexus/discussions) for questions
+- 🐛 [Create an issue](https://github.com/DeepenNehra/edunexus/issues) for bugs
+- 💬 Use [GitHub Discussions](https://github.com/DeepenNehra/edunexus/discussions) for questions
 - 📧 Contact maintainers for urgent issues
 
 ## 🧪 Demo Credentials
@@ -567,7 +569,7 @@ DELETE /api/admin/users/:id    # Delete user
 
 For support and questions:
 - 📧 Email: support@edunexus.com
-- 💬 GitHub Issues: [Create an issue](https://github.com/yourusername/edunexus/issues)
+- 💬 GitHub Issues: [Create an issue](https://github.com/DeepenNehra/edunexus/issues)
 - 📖 Documentation: Check the `/docs` folder for detailed guides
 
 ## 🙏 Acknowledgments
