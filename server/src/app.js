@@ -16,7 +16,21 @@ const fileRouter = require('./routes/file.routes');
 
 const app = express();
 
-app.use(cors());
+// CORS configuration
+const corsOptions = {
+  origin: [
+    'http://localhost:5173', // Local development
+    'http://localhost:3000', // Alternative local port
+    'https://edunexus-git-main-deepennehra-projects.vercel.app', // Your Vercel deployment
+    'https://*.vercel.app', // All Vercel subdomains
+    process.env.CLIENT_URL // Environment variable for production
+  ].filter(Boolean), // Remove undefined values
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+};
+
+app.use(cors(corsOptions));
 app.use(express.json({ limit: '10mb' }));
 app.use(morgan('dev'));
 
