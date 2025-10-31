@@ -34,7 +34,7 @@ export default function ManageCourse() {
   }, [dispatch, id]);
 
   const [lectureForm, setLectureForm] = useState({ title: '', description: '', videoUrl: '', videoFile: null });
-  const [assignmentForm, setAssignmentForm] = useState({ title: '', description: '', dueAt: '' });
+  const [assignmentForm, setAssignmentForm] = useState({ title: '', description: '', dueAt: '', attachmentFile: null });
   const [liveClassForm, setLiveClassForm] = useState({ title: '', description: '', scheduledAt: '', meetingLink: '', platform: 'zoom' });
 
   const handleAddLecture = async (e) => {
@@ -64,12 +64,24 @@ export default function ManageCourse() {
   const handleAddAssignment = async (e) => {
     e.preventDefault();
     try {
-      await api.post(`/courses/${id}/assignments`, assignmentForm);
+      const formData = new FormData();
+      formData.append('title', assignmentForm.title);
+      formData.append('description', assignmentForm.description);
+      formData.append('dueAt', assignmentForm.dueAt);
+      
+      if (assignmentForm.attachmentFile) {
+        formData.append('attachment', assignmentForm.attachmentFile);
+      }
+      
+      await api.post(`/courses/${id}/assignments`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+      
       setShowAddAssignment(false);
-      setAssignmentForm({ title: '', description: '', dueAt: '' });
+      setAssignmentForm({ title: '', description: '', dueAt: '', attachmentFile: null });
       dispatch(fetchAssignments(id));
     } catch (error) {
-      alert('Failed to add assignment');
+      alert('Failed to add assignment: ' + (error.response?.data?.error || error.message));
     }
   };
 
@@ -394,6 +406,42 @@ export default function ManageCourse() {
                   value={assignmentForm.dueAt}
                   onChange={(e) => setAssignmentForm({ ...assignmentForm, dueAt: e.target.value })}
                 />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  📎 Attachment (Optional)
+                </label>
+                <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 hover:border-blue-400 transition-colors bg-gray-50">
+                  <div className="text-center">
+                    <div className="text-3xl mb-2">📁</div>
+                    <input
+                      type="file"
+                      accept=".pdf,.png,.jpg,.jpeg"
+                      onChange={(e) => setAssignmentForm({ ...assignmentForm, attachmentFile: e.target.files[0] })}
+                      className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer"
+                    />
+                    {!assignmentForm.attachmentFile && (
+                      <p className="text-sm text-gray-600 mt-2">
+                        Click to select a file or drag and drop
+                      </p>
+                    )}
+                  </div>
+                  {assignmentForm.attachmentFile && (
+                    <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg text-sm text-green-700 text-center">
+                      <div className="flex items-center justify-center">
+                        <span className="text-lg mr-2">✅</span>
+                        <span className="font-medium">Selected: {assignmentForm.attachmentFile.name}</span>
+                      </div>
+                      <p className="text-xs text-green-600 mt-1">
+                        File size: {(assignmentForm.attachmentFile.size / 1024 / 1024).toFixed(2)} MB
+                      </p>
+                    </div>
+                  )}
+                </div>
+                <p className="text-xs text-gray-500 mt-2 flex items-center">
+                  <span className="mr-1">💡</span>
+                  Upload assignment instructions or reference materials (PDF, PNG, JPG formats only)
+                </p>
               </div>
               <div className="flex gap-3 mt-6">
                 <button
