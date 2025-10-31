@@ -19,7 +19,6 @@ export default function Signup() {
     const errorParam = searchParams.get('error')
     if (errorParam) {
       const errorMessages = {
-        google_oauth_not_configured: 'Google Sign-In is not configured yet. Please use email/password or contact the administrator.',
         google_auth_failed: 'Google authentication failed. Please try again.',
         authentication_failed: 'Authentication failed. Please try again.',
         invalid_token: 'Invalid authentication token. Please try again.',
@@ -42,10 +41,9 @@ export default function Signup() {
 
   const handleGoogleSignup = () => {
     setOauthError(null)
-    // Show a friendly message instead of redirecting to unconfigured OAuth
-    setOauthError('Google Sign-In is currently being set up. Please use email and password to create your account.')
-    // Uncomment below when Google OAuth is configured:
-    // window.location.href = `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/google`
+    // Redirect to Google OAuth
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+    window.location.href = `${apiUrl}/auth/google`
   }
 
   // Password strength checker
@@ -92,14 +90,13 @@ export default function Signup() {
             </div>
           )}
 
-          {/* Google Sign Up Button - Temporarily Disabled */}
+          {/* Google Sign Up Button */}
           <button
             onClick={handleGoogleSignup}
-            className="w-full flex items-center justify-center gap-3 bg-gray-100 border-2 border-gray-300 px-4 py-3 rounded-lg font-semibold text-gray-500 cursor-not-allowed opacity-75"
-            title="Google Sign-In is being configured. Please use email/password."
+            className="w-full flex items-center justify-center gap-3 bg-white border-2 border-gray-300 px-4 py-3 rounded-lg font-semibold text-gray-700 hover:border-gray-400 hover:shadow-md transition-all duration-200"
           >
-            <FcGoogle className="text-2xl opacity-50" />
-            <span>Continue with Google <span className="text-xs">(Coming Soon)</span></span>
+            <FcGoogle className="text-2xl" />
+            <span>Continue with Google</span>
           </button>
 
           {/* Divider */}
