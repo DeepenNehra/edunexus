@@ -12,6 +12,7 @@ const assignmentRouter = require('./routes/assignment.routes');
 const chatRouter = require('./routes/chat.routes');
 const adminRouter = require('./routes/admin.routes');
 const liveClassRouter = require('./routes/liveclass.routes');
+const fileRouter = require('./routes/file.routes');
 
 const app = express();
 
@@ -44,6 +45,7 @@ app.use('/api/courses/:courseId/assignments', assignmentRouter);
 app.use('/api/courses/:courseId/chat', chatRouter);
 app.use('/api/courses/:courseId/liveclasses', liveClassRouter);
 app.use('/api/admin', adminRouter);
+app.use('/api/files', fileRouter);
 
 module.exports = { app };
 

@@ -40,13 +40,26 @@ export default function Assignments() {
             {a.dueAt && <p className="text-xs text-slate-500">Due: {new Date(a.dueAt).toLocaleString()}</p>}
             {user?.role === 'student' && (
               <div className="mt-3">
-                <input type="file" onChange={(e)=>setSelectedFile(e.target.files[0])} className="mb-2" />
+                <div className="mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Upload your submission (PDF, PNG, JPG only)
+                  </label>
+                  <input 
+                    type="file" 
+                    accept=".pdf,.png,.jpg,.jpeg"
+                    onChange={(e)=>setSelectedFile(e.target.files[0])} 
+                    className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" 
+                  />
+                  <p className="text-xs text-gray-500 mt-1">
+                    Supported formats: PDF documents, PNG/JPG images
+                  </p>
+                </div>
                 <button 
-                  className="bg-blue-600 text-white px-4 py-2 rounded text-sm"
+                  className="bg-blue-600 text-white px-4 py-2 rounded text-sm hover:bg-blue-700 disabled:opacity-50"
                   onClick={()=>handleSubmit(a._id)}
-                  disabled={submittingId === a._id}
+                  disabled={submittingId === a._id || !selectedFile}
                 >
-                  {submittingId === a._id ? 'Submitting...' : 'Submit'}
+                  {submittingId === a._id ? 'Submitting...' : 'Submit Assignment'}
                 </button>
               </div>
             )}
