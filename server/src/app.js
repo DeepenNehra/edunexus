@@ -18,16 +18,31 @@ const app = express();
 
 // CORS configuration
 const corsOptions = {
-  origin: [
-    'http://localhost:5173', // Local development
-    'http://localhost:3000', // Alternative local port
-    'https://edunexus-git-main-deepennehra-projects.vercel.app', // Your Vercel deployment
-    'https://*.vercel.app', // All Vercel subdomains
-    process.env.CLIENT_URL // Environment variable for production
-  ].filter(Boolean), // Remove undefined values
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    const allowedOrigins = [
+      'http://localhost:5173',
+      'http://localhost:3000',
+      'http://localhost:5175',
+      process.env.CLIENT_URL,
+      'https://edunexus-git-main-deepennehra-projects.vercel.app',
+      'https://edunexus-nijyt2w9l-deepennehras-projects.vercel.app'
+    ].filter(Boolean);
+    
+    // Allow all Vercel preview deployments
+    if (origin.includes('vercel.app') || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  exposedHeaders: ['Content-Range', 'X-Content-Range'],
+  maxAge: 600 // Cache preflight for 10 minutes
 };
 
 app.use(cors(corsOptions));
