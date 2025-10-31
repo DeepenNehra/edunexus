@@ -5,11 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "start": "vite",
     "build": "vite build",
+    "test": "echo \"No tests specified\" && exit 0",
+    "eject": "echo \"eject not applicable for Vite\" && exit 0",
     "preview": "vite preview --port 5173",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
-    "lint:fix": "eslint . --fix",
-    "test": "echo 'No tests specified'"
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.3.0",
@@ -18,7 +20,13 @@
     "react-dom": "^18.2.0",
     "react-redux": "^9.1.0",
     "react-router-dom": "^6.22.3",
-    "socket.io-client": "^4.8.1"
+    "socket.io-client": "^4.8.1",
+    "rimraf": "^5.0.5",
+    "glob": "^10.3.10",
+    "@eslint/config-array": "^1.0.0",
+    "@eslint/object-schema": "^1.0.0",
+    "eslint": "^9.0.0",
+    "lru-cache": "^10.0.1"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.0",

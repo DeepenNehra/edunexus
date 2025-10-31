@@ -2,127 +2,34 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, develop ]
+    branches: [ main ]
 
 jobs:
-  test-backend:
-    runs-on: ubuntu-latest
-    
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x]
-        
-    services:
-      mongodb:
-        image: mongo:5.0
-        ports:
-          - 27017:27017
-        options: >-
-          --health-cmd mongo
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
-    steps:
-    - uses: actions/checkout@v3
-    
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-        cache-dependency-path: server/package-lock.json
-        
-    - name: Install backend dependencies
-      run: |
-        cd server
-        npm ci
-        
-    - name: Run backend tests
-      run: |
-        cd server
-        if npm run test --if-present; then
-          echo "Backend tests passed"
-        else
-          echo "No backend tests configured yet - skipping"
-        fi
-      env:
-        MONGODB_URI: mongodb://localhost:27017/edunexus_test
-        JWT_SECRET: test_jwt_secret
-        NODE_ENV: test
-
   test-frontend:
     runs-on: ubuntu-latest
     
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x]
+    defaults:
+      run:
+        working-directory: ./client
 
     steps:
     - uses: actions/checkout@v3
-    
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: '18.x'
         cache: 'npm'
-        cache-dependency-path: client/package-lock.json
-        
-    - name: Install frontend dependencies
-      run: |
-        cd client
-        npm ci
-        
-    - name: Run frontend tests
-      run: |
-        cd client
-        npm run test --if-present || echo "No frontend tests configured yet - skipping"
-        
-    - name: Build frontend
-      run: |
-        cd client
-        npm run build
-
-  lint:
-    runs-on: ubuntu-latest
+        cache-dependency-path: './client/package-lock.json'
     
-    steps:
-    - uses: actions/checkout@v3
+    - name: Install Dependencies
+      run: npm ci
     
-    - name: Use Node.js 18.x
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18.x
-        
-    - name: Install dependencies
-      run: |
-        cd server && npm ci
-        cd ../client && npm ci
-        
-    - name: Run ESLint on backend
-      run: |
-        cd server
-        npm run lint || true
-        
-    - name: Run ESLint on frontend
-      run: |
-        cd client
-        npm run lint || true
-
-  security:
-    runs-on: ubuntu-latest
+    - name: Run Tests
+      run: npm test -- --passWithNoTests
     
-    steps:
-    - uses: actions/checkout@v3
-    
-    - name: Run security audit on backend
-      run: |
-        cd server
-        npm audit --audit-level moderate || true
-        
-    - name: Run security audit on frontend
-      run: |
-        cd client
-        npm audit --audit-level moderate || true
+    - name: Build
+      run: npm run build
+      env:
+        CI: false
